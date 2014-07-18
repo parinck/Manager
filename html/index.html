@@ -13,7 +13,11 @@
     .ng-hide {
         display: none !important;
     }
+    html {
+        border: 0;
+    }
     body {
+        background: #fff;
         width: 600px;
         height: 700px;
         margin: 0 auto;
@@ -31,12 +35,70 @@
         display: inline-block;
         margin-bottom: 0;
     }
+    /* Add this attribute to the element that needs a tooltip */
+    [data-tooltip] {
+        position: relative;
+        z-index: 2;
+        cursor: pointer;
+    }
+    /* Hide the tooltip content by default */
+    [data-tooltip]:before,
+    [data-tooltip]:after {
+        visibility: hidden;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=0);
+        opacity: 0;
+        pointer-events: none;
+    }
+    /* Position tooltip above the element */
+    [data-tooltip]:before {
+        position: absolute;
+        bottom: 150%;
+        left: 50%;
+        margin-bottom: 5px;
+        margin-left: -80px;
+        padding: 7px;
+        width: 160px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        background-color: #000;
+        background-color: hsla(0, 0%, 20%, 0.9);
+        color: #fff;
+        content: attr(data-tooltip);
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.2;
+    }
+    /* Triangle hack to make tooltip look like a speech bubble */
+    [data-tooltip]:after {
+        position: absolute;
+        bottom: 150%;
+        left: 50%;
+        margin-left: -5px;
+        width: 0;
+        border-top: 5px solid #000;
+        border-top: 5px solid hsla(0, 0%, 20%, 0.9);
+        border-right: 5px solid transparent;
+        border-left: 5px solid transparent;
+        content: " ";
+        font-size: 0;
+        line-height: 0;
+    }
+    /* Show tooltip content on hover */
+    [data-tooltip]:hover:before,
+    [data-tooltip]:hover:after {
+        visibility: visible;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+        filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100);
+        opacity: 1;
+    }
     </style>
 </head>
 <script src="/js/angular.min.js"></script>
 <script src="/js/manager.js"></script>
 
-<body ng-controller="ManagerOnDuty" ng-init="search.type='extension';predicate='name'">
+<body class="panel" ng-controller="ManagerOnDuty" ng-init="search.type='extension';predicate='name'">
     <h2>Extensions</h2>
     <hr>
     <div class="row">
@@ -58,9 +120,9 @@
                 </h3>
             </span>
         </form>
-        <hr>
+        <br>
         <h2 ng-show="!filtered.length">No Results</h2>
-        <table ng-show="filtered.length" class="table table-bordered">
+        <table ng-show="filtered.length" class="table ">
             <thead>
                 <tr>
                     <th>
@@ -68,17 +130,20 @@
                         <a href="" ng-click="predicate='-name'">(^)</a>
                     </th>
                     <th>
-                        <a href="" ng-click="predicate='enabled'">Disabled</a>
                         <a href="" ng-click="predicate='-enabled'">Enabled</a>
+                        <a href="" ng-click="predicate='enabled'">(^)</a>
                     </th>
-                    <th>Danger</th>
+                    <th><a href="" style="cursor:default;text-decoration:none"> Controls</a>
+                    </th>
                 </tr>
             </thead>
             <caption>
             </caption>
             <tbody>
                 <tr ng-repeat="extension in filtered = (extensions | filter:search) | orderBy:predicate">
-                    <td>{{extension.name}}</td>
+                    <td>
+                        <span data-tooltip="hello <br> hello">{{extension.name}}</span>
+                    </td>
 
                     <td>
                         <a href="" ng-click="onOff(extension)">
