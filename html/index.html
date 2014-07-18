@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/tooltip.css">
     <style>
     .ng-hide {
         display: none !important;
@@ -35,71 +35,28 @@
         display: inline-block;
         margin-bottom: 0;
     }
-    /* Add this attribute to the element that needs a tooltip */
-    [data-tooltip] {
-        position: relative;
-        z-index: 2;
-        cursor: pointer;
-    }
-    /* Hide the tooltip content by default */
-    [data-tooltip]:before,
-    [data-tooltip]:after {
-        visibility: hidden;
-        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-        filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=0);
-        opacity: 0;
-        pointer-events: none;
-    }
-    /* Position tooltip above the element */
-    [data-tooltip]:before {
-        position: absolute;
-        bottom: 150%;
-        left: 50%;
-        margin-bottom: 5px;
-        margin-left: -80px;
-        padding: 7px;
-        width: 160px;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        border-radius: 3px;
-        background-color: #000;
-        background-color: hsla(0, 0%, 20%, 0.9);
-        color: #fff;
-        content: attr(data-tooltip);
-        text-align: center;
-        font-size: 14px;
-        line-height: 1.2;
-    }
-    /* Triangle hack to make tooltip look like a speech bubble */
-    [data-tooltip]:after {
-        position: absolute;
-        bottom: 150%;
-        left: 50%;
-        margin-left: -5px;
-        width: 0;
-        border-top: 5px solid #000;
-        border-top: 5px solid hsla(0, 0%, 20%, 0.9);
-        border-right: 5px solid transparent;
-        border-left: 5px solid transparent;
-        content: " ";
-        font-size: 0;
-        line-height: 0;
-    }
-    /* Show tooltip content on hover */
-    [data-tooltip]:hover:before,
-    [data-tooltip]:hover:after {
-        visibility: visible;
-        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-        filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100);
-        opacity: 1;
-    }
     </style>
 </head>
 <script src="/js/angular.min.js"></script>
 <script src="/js/manager.js"></script>
 
 <body class="panel" ng-controller="ManagerOnDuty" ng-init="search.type='extension';predicate='name'">
-    <h2>Extensions</h2>
+    <div class="row">
+        <span class="left">
+            <h2 style="display:inline-block">Extensions
+            </h2>
+        </span>
+        <span class="right">
+            <a href="" ng-click="godMode()">
+                <span class="glyphicon glyphicon-fire"></span>
+                God Mode
+            </a>
+            <a href="" ng-click="normalMode()">
+                <span class="glyphicon glyphicon-user"></span>
+                Normal Mode
+            </a>
+        </span>
+    </div>
     <hr>
     <div class="row">
         <form class="form-inline" role="form">
@@ -126,8 +83,13 @@
             <thead>
                 <tr>
                     <th>
-                        <a href="" ng-click="predicate='name'">Name</a>
-                        <a href="" ng-click="predicate='-name'">(^)</a>
+                        <a href="" ng-click="predicate='name'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </a>
+                        Name
+                        <a href="" ng-click="predicate='-name'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>
+                        </a>
                     </th>
                     <th>
                         <a href="" ng-click="predicate='-enabled'">Enabled</a>
@@ -142,7 +104,9 @@
             <tbody>
                 <tr ng-repeat="extension in filtered = (extensions | filter:search) | orderBy:predicate">
                     <td>
-                        <span data-tooltip="hello <br> hello">{{extension.name}}</span>
+                        <!-- <a href="chrome://extensions/?id={{extension.id}}"> -->
+                        <span class="tooltip-right" data-tooltip="{{getPersmissionList(extension)}}">{{extension.name}}</span>
+                        <!-- </a> -->
                     </td>
 
                     <td>
@@ -153,7 +117,7 @@
                     </td>
                     <td>
                         <a href="" ng-click="uninstall(extension)">
-                            <h4 class="glyphicon glyphicon-remove"></h4>
+                            <h4 class="glyphicon glyphicon-trash"></h4>
                         </a>
                     </td>
                 </tr>

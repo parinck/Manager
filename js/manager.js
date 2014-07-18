@@ -9,6 +9,21 @@ function ManagerOnDuty( $scope ) {
 		} )
 	};
 
+	$scope.normalMode = function () {
+		for ( var i = copy.length - 1; i >= 0; i-- ) {
+			copy[ i ]
+		};
+	};
+
+	$scope.getPersmissionList = function ( extension ) {
+		var permissions = extension.permissions;
+		if ( permissions.length ) {
+			return extension.permissions.join( " , " )
+		} else {
+			return "Nothing...:)";
+		}
+	}
+
 	$scope.uninstall = function ( extension ) {
 		chrome.management.uninstall( extension.id, function () {
 			$scope.$apply( function () {
