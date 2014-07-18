@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Mr. Manager</title>
+    <title>Manager</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -43,15 +43,18 @@
 <body class="panel" ng-controller="ManagerOnDuty" ng-init="search.type='extension';predicate='name'">
     <div class="row">
         <span class="left">
-            <h2 style="display:inline-block">Extensions
+            <h2 style="display:inline-block">
+                <img src="/icons/manager.png" alt="">
             </h2>
         </span>
         <span class="right">
-            <a href="" ng-click="godMode()">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="" ng-click="godMode()" data-tooltip="Disable All Extensions/Apps">
                 <span class="glyphicon glyphicon-fire"></span>
                 God Mode
             </a>
-            <a href="" ng-click="normalMode()">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="" ng-click="normalMode()" data-tooltip="Restore profile">
                 <span class="glyphicon glyphicon-user"></span>
                 Normal Mode
             </a>
