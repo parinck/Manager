@@ -4,67 +4,97 @@
 <head>
     <meta charset="UTF-8">
     <title>Mr. Manager</title>
-    <style type="text/css">
-    #mainPopup {
-        padding: 10px;
-        height: 200px;
-        width: 400px;
-        font-family: Helvetica, Ubuntu, Arial, sans-serif;
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <style>
+    .ng-hide {
+        display: none !important;
     }
-    h1 {
-        font-size: 2em;
+    body {
+        width: 600px;
+        height: 700px;
+        margin: 0 auto;
+        padding-left: 30px !important;
     }
-    html {
-        height: 800px;
-        width: 400px;
+    .form-control {
+        width: 200px !important;
+        display: inline-block;
+    }
+    .table {
+        width: 570px !important;
+    }
+    h4 {
+        margin-top: 0;
+        display: inline-block;
+        margin-bottom: 0;
     }
     </style>
 </head>
 <script src="/js/angular.min.js"></script>
 <script src="/js/manager.js"></script>
 
-<body ng-controller="ManagerOnDuty" ng-init="search.type='extension';predicate='-enabled'">
+<body ng-controller="ManagerOnDuty" ng-init="search.type='extension';predicate='name'">
     <h2>Extensions</h2>
-    <input type="text" ng-model="search.$">
-    <select name="" id="" ng-model="search.type">
-        <option value="extension">extension</option>
-        <option value="hosted_app">hosted_app</option>
-        <option value="packaged_app">packaged_app</option>
-        <option value="legacy_packaged_app">legacy_packaged_app</option>
-        <option value="theme">theme</option>
-    </select>
-    <h2 ng-show="false">false</h2>
-    <h2 ng-show="!filtered.length">No Results</h2>
-    <table ng-show="filtered.length">
-        <thead>
-            <tr>
-                <th>
-                    <a ng-show="predicate!='name'" href="" ng-click="predicate='name'">Name</a>
-                    <a ng-show="predicate!='-name'" href="" ng-click="predicate='-name'">^Name</a>
-                </th>
-                <th>
-                    <a href="" ng-show="predicate!='enabled'" ng-click="predicate='enabled'">Disabled</a>
-                    <a href="" ng-show="predicate!='-enabled'" ng-click="predicate='-enabled'">Enabled</a>
-                </th>
-                <th>Danger</th>
-            </tr>
-        </thead>
-        <caption>All Extension&nbsp;&nbsp;&nbsp;&nbsp;
-            <span>filtered {{filtered.length}}</span>
-            <span>total {{extensions.length}}</span>
-        </caption>
-        <tbody>
-            <tr ng-repeat="extension in filtered = (extensions | filter:search) | orderBy:predicate">
-                <td>{{extension.name}}</td>
+    <hr>
+    <div class="row">
+        <form class="form-inline" role="form">
+            <input placeholder="Search" class="form-control" type="text" ng-model="search.$">
+            <select class="form-control" name="" id="" ng-model="search.type">
+                <option value="">All</option>
+                <option value="extension">extension</option>
+                <option value="hosted_app">hosted_app</option>
+                <option value="packaged_app">packaged_app</option>
+                <option value="legacy_packaged_app">legacy_packaged_app</option>
+                <option value="theme">theme</option>
+            </select>
+            <span class="right">
+                <h3 style="display:inline">
+                    <span class="label label-primary">
+                        {{filtered.length}} of total {{extensions.length}}
+                    </span>
+                </h3>
+            </span>
+        </form>
+        <hr>
+        <h2 ng-show="!filtered.length">No Results</h2>
+        <table ng-show="filtered.length" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="" ng-click="predicate='name'">Name</a>
+                        <a href="" ng-click="predicate='-name'">(^)</a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="predicate='enabled'">Disabled</a>
+                        <a href="" ng-click="predicate='-enabled'">Enabled</a>
+                    </th>
+                    <th>Danger</th>
+                </tr>
+            </thead>
+            <caption>
+            </caption>
+            <tbody>
+                <tr ng-repeat="extension in filtered = (extensions | filter:search) | orderBy:predicate">
+                    <td>{{extension.name}}</td>
 
-                <td>
-                    <input type="checkbox" ng-model="extension.enabled" ng-click="onOff(extension)">
-                </td>
-                <td><a href="" ng-click="uninstall(extension)">[x]</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                    <td>
+                        <a href="" ng-click="onOff(extension)">
+                            <h4 ng-show="extension.enabled" class="glyphicon glyphicon-eye-open"></h4>
+                            <h4 ng-show="!extension.enabled" class="glyphicon glyphicon-eye-close"></h4>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="" ng-click="uninstall(extension)">
+                            <h4 class="glyphicon glyphicon-remove"></h4>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>
