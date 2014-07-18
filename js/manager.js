@@ -9,9 +9,26 @@ function ManagerOnDuty( $scope ) {
 		} )
 	};
 
+	$scope.godMode = function () {
+		localStorage.setItem( 'extensions', JSON.stringify( $scope.extensions ) );
+		for ( var i = $scope.extensions.length - 1; i >= 0; i-- ) {
+			ext = $scope.extensions[ i ];
+			if ( ext.name.indexOf( "Mr. Manager" ) > -1 ) {
+				ext.enabled = false;
+			} else {
+				ext.enabled = true;
+			}
+			$scope.onOff( ext );
+		};
+	};
+
 	$scope.normalMode = function () {
-		for ( var i = copy.length - 1; i >= 0; i-- ) {
-			copy[ i ]
+		$scope.extensions = JSON.parse( localStorage.getItem( 'extensions' ) );
+		var ext;
+		for ( var i = $scope.extensions.length - 1; i >= 0; i-- ) {
+			ext = $scope.extensions[ i ];
+			ext.enabled = !ext.enabled;
+			$scope.onOff( ext );
 		};
 	};
 
@@ -22,7 +39,7 @@ function ManagerOnDuty( $scope ) {
 		} else {
 			return "Nothing...:)";
 		}
-	}
+	};
 
 	$scope.uninstall = function ( extension ) {
 		chrome.management.uninstall( extension.id, function () {
@@ -30,7 +47,7 @@ function ManagerOnDuty( $scope ) {
 				getExtensionList();
 			} )
 		} );
-	}
+	};
 
 
 	$scope.onOff = function ( extension ) {
@@ -39,7 +56,7 @@ function ManagerOnDuty( $scope ) {
 				extension.enabled = !extension.enabled;
 			} )
 		} );
-	}
+	};
 
 	getExtensionList();
 }
