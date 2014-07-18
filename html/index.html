@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Manager" ng-csp>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mr. Manager</title>
+    <style type="text/css">
+    #mainPopup {
+        padding: 10px;
+        height: 200px;
+        width: 400px;
+        font-family: Helvetica, Ubuntu, Arial, sans-serif;
+    }
+    h1 {
+        font-size: 2em;
+    }
+    html {
+        height: 800px;
+        width: 400px;
+    }
+    </style>
+</head>
+<script src="/js/angular.min.js"></script>
+<script src="/js/manager.js"></script>
+
+<body ng-controller="ManagerOnDuty" ng-init="search.type='extension';predicate='-enabled'">
+    <h2>Extensions</h2>
+    <input type="text" ng-model="search.$">
+    <select name="" id="" ng-model="search.type">
+        <option value="extension">extension</option>
+        <option value="hosted_app">hosted_app</option>
+        <option value="packaged_app">packaged_app</option>
+        <option value="legacy_packaged_app">legacy_packaged_app</option>
+        <option value="theme">theme</option>
+    </select>
+    <h2 ng-show="false">false</h2>
+    <h2 ng-show="!filtered.length">No Results</h2>
+    <table ng-show="filtered.length">
+        <thead>
+            <tr>
+                <th>
+                    <a ng-show="predicate!='name'" href="" ng-click="predicate='name'">Name</a>
+                    <a ng-show="predicate!='-name'" href="" ng-click="predicate='-name'">^Name</a>
+                </th>
+                <th>
+                    <a href="" ng-show="predicate!='enabled'" ng-click="predicate='enabled'">Disabled</a>
+                    <a href="" ng-show="predicate!='-enabled'" ng-click="predicate='-enabled'">Enabled</a>
+                </th>
+                <th>Danger</th>
+            </tr>
+        </thead>
+        <caption>All Extension&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>filtered {{filtered.length}}</span>
+            <span>total {{extensions.length}}</span>
+        </caption>
+        <tbody>
+            <tr ng-repeat="extension in filtered = (extensions | filter:search) | orderBy:predicate">
+                <td>{{extension.name}}</td>
+
+                <td>
+                    <input type="checkbox" ng-model="extension.enabled" ng-click="onOff(extension)">
+                </td>
+                <td><a href="" ng-click="uninstall(extension)">[x]</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

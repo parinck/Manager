@@ -1,0 +1,19 @@
+{
+	"name": "Mr. Manager",
+	"version": "0.0.1",
+	"manifest_version": 2,
+	"description": "Chrome extension manager",
+	"icons": {
+		"16": "icons/icon16.png",
+		"48": "icons/icon48.png",
+		"128": "icons/icon128.png"
+	},
+	"browser_action": {
+		"default_icon": "icons/icon19.png",
+		"default_title": "Call Manager",
+		"default_popup": "html/index.html"
+	},
+	"permissions": [
+		"management"
+	]
+}
