@@ -55,12 +55,11 @@
         </span>
         <span class="right">
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="" ng-click="godMode()" data-tooltip="Disable All Extensions/Apps">
+            <a ng-show="mode != 'GOD'" href="" ng-click="godMode()" data-tooltip="Disable All Extensions/Apps">
                 <span class="glyphicon glyphicon-fire"></span>
                 God Mode
             </a>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="" ng-click="normalMode()" data-tooltip="Restore profile">
+            <a ng-show="mode == 'GOD'" href="" ng-click="normalMode()" data-tooltip="Restore profile">
                 <span class="glyphicon glyphicon-user"></span>
                 Normal Mode
             </a>
