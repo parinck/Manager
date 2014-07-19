@@ -35,6 +35,12 @@
         display: inline-block;
         margin-bottom: 0;
     }
+    .header {
+        position: fixed;
+        display: block;
+        width: 100%;
+        background: white;
+    }
     </style>
 </head>
 <script src="/js/angular.min.js"></script>
@@ -63,7 +69,7 @@
     <hr>
     <div class="row">
         <form class="form-inline" role="form">
-            <input placeholder="Search" class="form-control" type="text" ng-model="search.$">
+            <input id="search" placeholder="Search" class="form-control" type="text" ng-model="search.$">
             <select class="form-control" name="" id="" ng-model="search.type">
                 <option value="">All</option>
                 <option value="extension">extension</option>
@@ -107,8 +113,8 @@
             <tbody>
                 <tr ng-repeat="extension in filtered = (extensions | filter:search) | orderBy:predicate">
                     <td>
-                        <!-- <a href="chrome://extensions/?id={{extension.id}}"> -->
-                        <span class="tooltip-right" data-tooltip="{{getPersmissionList(extension)}}">{{extension.name}}</span>
+                        <!-- <a target="_blank" ng-href="chrome://extensions/?id={{extension.id}}"> -->
+                        <span class="tooltip-right" data-tooltip="{{getPersmissionList(extension)}}">{{extension.name}} ({{extension.permissions.length}})</span>
                         <!-- </a> -->
                     </td>
 

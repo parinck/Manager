@@ -1,6 +1,28 @@
 var Manager = angular.module( 'Manager', [] );
 
 function ManagerOnDuty( $scope ) {
+
+	if ( localStorage.getItem( 'mode' ) == 1 ) {
+		$scope.mode = "GOD";
+	} else {
+		$scope.mode = "";
+	}
+
+	$scope.$watch( 'mode', function () {
+		if ( $scope.mode === "GOD" ) {
+			chrome.browserAction.setBadgeText( {
+				text: "G"
+			} );
+			chrome.browserAction.setBadgeBackgroundColor( {
+				color: "#ff9900"
+			} )
+		} else {
+			chrome.browserAction.setBadgeText( {
+				text: ""
+			} );
+		}
+	} )
+
 	function getExtensionList() {
 		chrome.management.getAll( function ( extensions ) {
 			$scope.$apply( function () {
@@ -10,10 +32,12 @@ function ManagerOnDuty( $scope ) {
 	};
 
 	$scope.godMode = function () {
+		$scope.mode = "GOD";
 		localStorage.setItem( 'extensions', JSON.stringify( $scope.extensions ) );
+		localStorage.setItem( 'mode', 1 );
 		for ( var i = $scope.extensions.length - 1; i >= 0; i-- ) {
 			ext = $scope.extensions[ i ];
-			if ( ext.name.indexOf( "Mr. Manager" ) > -1 ) {
+			if ( ext.name === "Manager" ) {
 				ext.enabled = false;
 			} else {
 				ext.enabled = true;
@@ -23,6 +47,8 @@ function ManagerOnDuty( $scope ) {
 	};
 
 	$scope.normalMode = function () {
+		$scope.mode = "";
+		localStorage.setItem( 'mode', 0 );
 		$scope.extensions = JSON.parse( localStorage.getItem( 'extensions' ) );
 		var ext;
 		for ( var i = $scope.extensions.length - 1; i >= 0; i-- ) {
@@ -59,4 +85,6 @@ function ManagerOnDuty( $scope ) {
 	};
 
 	getExtensionList();
+	document.getElementById( 'search' )
+		.focus();
 }
