@@ -1,6 +1,6 @@
 {
 	"name": "Manager",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"manifest_version": 2,
 	"description": "Chrome extension/apps manager",
 	"icons": {
@@ -15,5 +15,15 @@
 	},
 	"permissions": [
 		"management"
-	]
+	],
+	"commands": {
+		"_execute_browser_action": {
+			"suggested_key": {
+				"windows": "Ctrl+M",
+				"mac": "Ctrl+M",
+				"chromeos": "Ctrl+M",
+				"linux": "Ctrl+M"
+			}
+		}
+	}
 }
