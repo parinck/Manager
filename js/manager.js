@@ -14,7 +14,7 @@ function ManagerOnDuty( $scope ) {
 				text: "G"
 			} );
 			chrome.browserAction.setBadgeBackgroundColor( {
-				color: "#ff9900"
+				color: "#000"
 			} )
 		} else {
 			chrome.browserAction.setBadgeText( {
