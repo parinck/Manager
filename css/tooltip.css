@@ -143,3 +143,16 @@
 .color-disabled {
     color: #dddddd;
 }
+
+.no-href-links {
+    color: #333;
+    cursor: pointer;
+}
+
+.no-href-links:hover {
+    text-decoration: none;
+}
+
+.color-red {
+    color: #b94a48 !important;
+}
