@@ -64,6 +64,13 @@
                 Normal Mode
             </a>
         </span>
+        <span class="right">
+            <!-- &nbsp;&nbsp;&nbsp;&nbsp; -->
+            <a href="https://github.com/parinck/Manager" target="_blank">
+                <span class="glyphicon glyphicon-wrench"></span>
+                Contribute
+            </a>
+        </span>
     </div>
     <hr>
     <div class="row">
@@ -91,19 +98,20 @@
             <thead>
                 <tr>
                     <th>
-                        <a href="" ng-click="predicate='name'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </a>
-                        Name
-                        <a href="" ng-click="predicate='-name'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>
+                        <a ng-click="toggleSortWithName()" class="no-href-links">
+                            Name
+                            <span ng-show="sortedWithName" ng-click="predicate='name'"class="glyphicon glyphicon-sort-by-alphabet"></span>
+                            <span ng-show="!sortedWithName" ng-click="predicate='-name'"class="glyphicon glyphicon-sort-by-alphabet-alt"></span>
                         </a>
                     </th>
                     <th>
-                        <a href="" ng-click="predicate='-enabled'">Enabled</a>
-                        <a href="" ng-click="predicate='enabled'">(^)</a>
+                        <a ng-click="toggleSortWithEnabled()" class="no-href-links">
+                            Enabled
+                            <span ng-show="sortedWithEnabled" ng-click="predicate='enabled'"class="glyphicon glyphicon-sort-by-attributes"></span>
+                            <span ng-show="!sortedWithEnabled" ng-click="predicate='-enabled'"class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+                        </a>
                     </th>
-                    <th><a href="" style="cursor:default;text-decoration:none"> Controls</a>
+                    <th><a class="no-href-links"> Controls</a>
                     </th>
                 </tr>
             </thead>
@@ -112,9 +120,7 @@
             <tbody>
                 <tr ng-repeat="extension in filtered = (extensions | filter:search) | orderBy:predicate">
                     <td>
-                        <!-- <a target="_blank" ng-href="chrome://extensions/?id={{extension.id}}"> -->
                         <span class="tooltip-right" data-tooltip="{{getPersmissionList(extension)}}">{{extension.name}} ({{extension.permissions.length}})</span>
-                        <!-- </a> -->
                     </td>
 
                     <td>
@@ -125,7 +131,7 @@
                     </td>
                     <td>
                         <a href="" ng-click="uninstall(extension)">
-                            <h4 class="glyphicon glyphicon-trash"></h4>
+                            <h4 class="glyphicon glyphicon-trash color-red"></h4>
                         </a>
                     </td>
                 </tr>

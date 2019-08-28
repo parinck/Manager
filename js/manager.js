@@ -31,6 +31,14 @@ function ManagerOnDuty( $scope ) {
 		} )
 	};
 
+	$scope.toggleSortWithName = function() {
+		$scope.sortedWithName = !$scope.sortedWithName;
+	};
+
+	$scope.toggleSortWithEnabled = function() {
+		$scope.sortedWithEnabled = !$scope.sortedWithEnabled;
+	};
+
 	$scope.godMode = function () {
 		$scope.mode = "GOD";
 		localStorage.setItem( 'extensions', JSON.stringify( $scope.extensions ) );
